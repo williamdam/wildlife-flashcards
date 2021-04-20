@@ -25,7 +25,7 @@
     border: 4px solid red;
 }
 
-.fill {
+.cardFront {
     width: 100%;
     height: 100%;
     display: block;
@@ -38,4 +38,8 @@
     height: 16px;
     overflow: hidden;
     text-overflow: ellipsis;
+}
+
+.cardBack {
+    padding: 20px;
 }

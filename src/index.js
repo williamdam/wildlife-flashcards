@@ -60,7 +60,7 @@ function _convertToJson(csv) {
 //////////////////////////////////////////////////////////////////////
 function cardFront(i) {
     return (
-        <img className="fill" src={animalObject[i].image} />
+        <img className="cardFront" src={animalObject[i].image} />
     );
 }
 
@@ -77,7 +77,7 @@ function cardCredit(i) {
 
 function cardBack(i) {
     return (
-        <div>
+        <div className="cardBack">
             <p>Class: {animalObject[i].class}</p>
             <p>Order: {animalObject[i].order}</p>
             <p>Family: {animalObject[i].family}</p>
