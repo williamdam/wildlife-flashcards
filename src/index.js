@@ -9,19 +9,22 @@ const webURL = "http://take-home-wildlife.s3-website-us-west-2.amazonaws.com/dat
 // Var holds JSON object, parsed form csv file
 let animalObject = {};
 
+// Display title of page
 const pageTitle = <h1>Wildlife Flashcard App</h1>;
 
 //////////////////////////////////////////////////////////////////////
 // Description: Get csv file from url
 // Args: webURL string
-// Returns: None.  Saves JSON to animalObject var.
+// Returns: None.  Saves JSON to animalObject var, then calls render()
 //////////////////////////////////////////////////////////////////////
-fetch(webURL)
-    .then(response => response.text())
-    .then(text => _convertToJson(text))
-    .then(function(object) {
-        animalObject = object;
-        console.log(animalObject);
+fetch(webURL)                               // Fetch data from url
+    .then(response => response.text())      // Get text content from response
+    .then(text => _convertToJson(text))     // Call helper function to convert to JSON
+    .then(function(object) {                // Pass JSON object to closure
+        animalObject = object;              // Assign JSON object to local var
+        //console.log(animalObject);          // Print JSON for debug
+
+        // Render to DOM, pass in Flashcards class
         ReactDOM.render(<Flashcards />, document.getElementById("root"));
     });
 
@@ -99,12 +102,21 @@ function cardBack(i) {
     );
 }
 
+//////////////////////////////////////////////////////////////////////
+// Description: React class to display flashcards
+// Args: None.  Invoked from fetch, promise chain.
+// Returns: Front and back of postcards
+// Source: https://reactjs.org/docs/handling-events.html
+//////////////////////////////////////////////////////////////////////
 class Flashcards extends React.Component {
     
+    // Initialize states. 
+    // bool isCardFront holds state to toggle flashcards
+    // int slideNum holds state for flashcard index
     constructor(props) {
         super(props);
         this.state = {
-            isToggleOn: true,
+            isCardFront: true,
             slideNum: 0
         };
 
@@ -114,14 +126,16 @@ class Flashcards extends React.Component {
         this.prevSlide = this.prevSlide.bind(this);
     }
 
+    // Toggle state for front and back of card
     flipCard() {
         this.setState(state => ({
-            isToggleOn: !state.isToggleOn
+            isCardFront: !state.isCardFront
         }));
       }
 
+    // Update state to increment card index
     nextSlide() {
-        if (this.state.slideNum === animalObject.length - 1) {
+        if (this.state.slideNum === animalObject.length - 1) {  // Edge case: index > last element
             this.setState(state => ({
                 slideNum: 0
             }));
@@ -132,8 +146,9 @@ class Flashcards extends React.Component {
         }
     }
 
+    // Update state to decrement card index
     prevSlide() {
-        if (this.state.slideNum === 0) {
+        if (this.state.slideNum === 0) {            // Edge case: index < first element
             this.setState(state => ({
                 slideNum: animalObject.length - 1
             }));
@@ -144,19 +159,23 @@ class Flashcards extends React.Component {
         }
     }
 
+    // Return div for display
     render() {
-        let index = this.state.slideNum;
-        if (this.state.isToggleOn) {
+        let index = this.state.slideNum;    // Save current state to var index
+
+        // Show front of flashcard 
+        if (this.state.isCardFront) {
             return (
                 <div className="container">
                     <h1 className="text-center">{pageTitle}</h1>
+                    <p className="text-center">Click on the image to reveal details</p>
                     <div className="mx-auto m-4 col-md-6">
                         <div>
                             <div onClick={this.flipCard} className="slide">{cardFront(index)}</div>
                             {cardCredit(index)}
                         </div>
                         <div className="row">
-                            <button className="btn btn-primary col-5 mx-auto" onClick={this.prevSlide}>
+                            <button className="btn btn-secondary col-5 mx-auto" onClick={this.prevSlide}>
                                 Prev Slide
                             </button>
                             <button className="btn btn-primary col-5 mx-auto" onClick={this.nextSlide}>
@@ -166,17 +185,21 @@ class Flashcards extends React.Component {
                     </div>
                 </div>
             );
-        } else {
+        } 
+        
+        // Show back of flashcard
+        else {
             return (
                 <div className="container">
                     <h1 className="text-center">{pageTitle}</h1>
+                    <p className="text-center">Click on the slide to see picture</p>
                     <div className="mx-auto m-4 col-md-6">
                         <div>
                             <div onClick={this.flipCard} className="slide">{cardBack(index)}</div>
                             <p className="credit"></p>
                         </div>
                         <div className="row">
-                            <button className="btn btn-primary col-5 mx-auto" onClick={this.prevSlide}>
+                            <button className="btn btn-secondary col-5 mx-auto" onClick={this.prevSlide}>
                                 Prev Slide
                             </button>
                             <button className="btn btn-primary col-5 mx-auto" onClick={this.nextSlide}>
