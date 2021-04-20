@@ -90,7 +90,7 @@ function cardCredit(i) {
 //////////////////////////////////////////////////////////////////////
 function cardBack(i) {
     return (
-        <div className="cardBack">
+        <div className="p-4">
             <p>Class: {animalObject[i].class}</p>
             <p>Order: {animalObject[i].order}</p>
             <p>Family: {animalObject[i].family}</p>
