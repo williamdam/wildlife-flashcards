@@ -10,7 +10,7 @@ const webURL = "http://take-home-wildlife.s3-website-us-west-2.amazonaws.com/dat
 let animalObject = {};
 
 // Display title of page
-const pageTitle = <h1>Wildlife Flashcard App</h1>;
+const pageTitle = 'Wildlife Flashcard App';
 
 //////////////////////////////////////////////////////////////////////
 // Description: Get csv file from url
