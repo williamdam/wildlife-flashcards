@@ -171,7 +171,7 @@ class Flashcards extends React.Component {
                     <p className="text-center">Click on the image to reveal details</p>
                     <div className="mx-auto m-4 col-md-6">
                         <div>
-                            <div onClick={this.flipCard} className="slide">{cardFront(index)}</div>
+                            <div onClick={this.flipCard} className="slide rounded-3">{cardFront(index)}</div>
                             {cardCredit(index)}
                         </div>
                         <div className="row">
@@ -195,7 +195,7 @@ class Flashcards extends React.Component {
                     <p className="text-center">Click on the slide to see picture</p>
                     <div className="mx-auto m-4 col-md-6">
                         <div>
-                            <div onClick={this.flipCard} className="slide">{cardBack(index)}</div>
+                            <div onClick={this.flipCard} className="slide rounded-3">{cardBack(index)}</div>
                             <p className="credit"></p>
                         </div>
                         <div className="row">
