@@ -1,4 +1,4 @@
-# Take Home Wildlife Project
+# Wildlife Flash Card App
 
 ### Description:
 
