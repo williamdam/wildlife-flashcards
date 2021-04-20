@@ -2,3 +2,40 @@
     font-weight: bold;
     text-decoration: underline;
 }
+
+.App {
+    text-align: center;
+}
+
+.flashcard {
+    font-size: 24px;
+    line-height: 72px;
+    width: 216px;
+    border: 1px solid black;
+    margin: 18px;
+    background-color: rgb(200, 200, 200);
+    cursor: pointer;
+    user-select: none;
+}
+
+.slide {
+    width: 500px;
+    height: 400px;
+    overflow: scroll;
+    border: 4px solid red;
+}
+
+.fill {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+}
+
+.credit {
+    font-size: 14px;
+    line-height: 16px;
+    height: 16px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
