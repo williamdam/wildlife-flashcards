@@ -1,12 +1,15 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import "./styles.css";
+import "./css/styles.css";
+import "./css/bootstrap.css";
 
 // Web location of csv file, containing wildlife data
 const webURL = "http://take-home-wildlife.s3-website-us-west-2.amazonaws.com/data.csv";
 
 // Var holds JSON object, parsed form csv file
 let animalObject = {};
+
+const pageTitle = <h1>Wildlife Flashcard App</h1>;
 
 //////////////////////////////////////////////////////////////////////
 // Description: Get csv file from url
@@ -32,14 +35,16 @@ function _convertToJson(csv) {
 
     var result = [];                                // Array holds JSON objects
     var rows = csv.split('\n');                     // Divide file by lines
-    var headers = rows[0].split(',');               // Divide header by commas
-    console.log(headers);                           
+    var headers = rows[0].split(',');               // Split header by commas
 
     // Make JSON objects from csv rows
     for (let i = 1; i < rows.length - 1; i++) {         // For each row
-        var object = {};                            // Holds JSON object                   
-        var currentRow = rows[i].split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);        // Divide line by commas
-        //var currentRow = row[i].split(',');
+
+        var object = {};                                // Holds JSON object 
+
+        // Split row by commas, outside of quotes, using regular expression
+        // Source: https://regexr.com/44u6o
+        var currentRow = rows[i].split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/);
 
         // Save key-value pairs to JSON object
         for(let j = 0; j < headers.length; j++) {   // Header elements contain keys
@@ -75,6 +80,11 @@ function cardCredit(i) {
     );
 }
 
+//////////////////////////////////////////////////////////////////////
+// Description: Displays back of flashcard
+// Args: Index for JSON object
+// Returns: <div>
+//////////////////////////////////////////////////////////////////////
 function cardBack(i) {
     return (
         <div className="cardBack">
@@ -99,12 +109,12 @@ class Flashcards extends React.Component {
         };
 
         // This binding is necessary to make `this` work in the callback
-        this.handleClick = this.handleClick.bind(this);
+        this.flipCard = this.flipCard.bind(this);
         this.nextSlide = this.nextSlide.bind(this);
         this.prevSlide = this.prevSlide.bind(this);
     }
 
-    handleClick() {
+    flipCard() {
         this.setState(state => ({
             isToggleOn: !state.isToggleOn
         }));
@@ -138,32 +148,42 @@ class Flashcards extends React.Component {
         let index = this.state.slideNum;
         if (this.state.isToggleOn) {
             return (
-                <div>
-                    <div onClick={this.handleClick}>
-                        <div className="slide">{cardFront(index)}</div>
-                        {cardCredit(index)}
+                <div className="container">
+                    <h1 className="text-center">{pageTitle}</h1>
+                    <div className="mx-auto m-4 col-md-6">
+                        <div>
+                            <div onClick={this.flipCard} className="slide">{cardFront(index)}</div>
+                            {cardCredit(index)}
+                        </div>
+                        <div className="row">
+                            <button className="btn btn-primary col-5 mx-auto" onClick={this.prevSlide}>
+                                Prev Slide
+                            </button>
+                            <button className="btn btn-primary col-5 mx-auto" onClick={this.nextSlide}>
+                                Next Slide
+                            </button>
+                        </div>
                     </div>
-                    <button onClick={this.prevSlide}>
-                        Prev Slide
-                    </button>
-                    <button onClick={this.nextSlide}>
-                        Next Slide
-                    </button>
                 </div>
             );
         } else {
             return (
-                <div>
-                    <div onClick={this.handleClick}>
-                        <div className="slide">{cardBack(index)}</div>
-                        <p className="credit"></p>
+                <div className="container">
+                    <h1 className="text-center">{pageTitle}</h1>
+                    <div className="mx-auto m-4 col-md-6">
+                        <div>
+                            <div onClick={this.flipCard} className="slide">{cardBack(index)}</div>
+                            <p className="credit"></p>
+                        </div>
+                        <div className="row">
+                            <button className="btn btn-primary col-5 mx-auto" onClick={this.prevSlide}>
+                                Prev Slide
+                            </button>
+                            <button className="btn btn-primary col-5 mx-auto" onClick={this.nextSlide}>
+                                Next Slide
+                            </button>
+                        </div>
                     </div>
-                    <button onClick={this.prevSlide}>
-                        Prev Slide
-                    </button>
-                    <button onClick={this.nextSlide}>
-                        Next Slide
-                    </button>
                 </div>
             );
         }
