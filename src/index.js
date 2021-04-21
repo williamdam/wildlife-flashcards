@@ -1,3 +1,8 @@
+//////////////////////////////////////////////////////////////////////
+// Author: William Dam
+// Date: 04-21-2021
+// Description: Main React app file renders to index.html
+//////////////////////////////////////////////////////////////////////
 import React from "react";
 import ReactDOM from "react-dom";
 import "./css/styles.css";
@@ -169,7 +174,7 @@ class Flashcards extends React.Component {
                 <div className="container">
                     <h1 className="text-center">{pageTitle}</h1>
                     <p className="text-center">Click on the image to reveal details</p>
-                    <div className="mx-auto m-4 col-md-6">
+                    <div className="mx-auto m-4 col-lg-6">
                         <div>
                             <div onClick={this.flipCard} className="slide rounded-3">{cardFront(index)}</div>
                             {cardCredit(index)}
@@ -193,7 +198,7 @@ class Flashcards extends React.Component {
                 <div className="container">
                     <h1 className="text-center">{pageTitle}</h1>
                     <p className="text-center">Click on the slide to see picture</p>
-                    <div className="mx-auto m-4 col-md-6">
+                    <div className="mx-auto m-4 col-lg-6">
                         <div>
                             <div onClick={this.flipCard} className="slide rounded-3">{cardBack(index)}</div>
                             <p className="credit"></p>
