@@ -62,8 +62,7 @@ function _convertToJson(csv) {
         result.push(object);                        // Add JSON object to result array
     }
 
-    var jsonString = JSON.stringify(result);        // Convert result array to JSON string
-    return JSON.parse(jsonString);                  // Parse JSON string and return
+    return result;              // Parse JSON string and return
 }
 
 //////////////////////////////////////////////////////////////////////
